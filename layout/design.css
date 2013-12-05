@@ -26,5 +26,8 @@ div#Container{
 
 .paraList {
 	border-bottom:1px solid #eee;
+}
 
+ul {
+	display: inline-block;
 }
