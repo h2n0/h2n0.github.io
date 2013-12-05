@@ -12,7 +12,7 @@ h1 small{
 	font-size:24px;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 li ul {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 500;
 	line-height: 1.1;
@@ -23,14 +23,38 @@ div#container{
 	padding-left:20px;
 	padding-right:20px;
 }
-h1#Logo{
-	padding-bottom:5px;
-}
 
 .paraList {
 	border-bottom:1px solid #eee;
 }
 
-ul {
+ul#HeaderMenu {
+	display:block;
+	display:-webkit-inline-box;
 	list-style-type:none;
+	padding-left:10px;
+	padding-right:5px;
+	text-align:left;
+	-webkit-margin-before: 1em;
+}
+
+li.menu{
+	padding-right:20px;
+	display:block;
+	display:-webkit-inline-box;
+}
+
+a.Menu{
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: 500;
+	line-height: 1.1;
+	color: #999;
+	font-size:24px;
+	text-decoration:none;
+}
+
+a.Menu:hover{
+	color: #EB8931;
+	font-size:24px;
+	text-decoration:none;
 }
