@@ -4,7 +4,7 @@ h1{
 	margin-bottom:10px;
 	color: #333;
 	display:inline-block;
-	text-align:center;
+	text-align:left;
 }
 
 h1 small{
@@ -18,14 +18,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 li ul {
 	line-height: 1.1;
 }
 
-div#container{
+div{
 	padding-top: 5px;
 	padding-left:20px;
 	padding-right:20px;
-}
-
-.paraList {
-	border-bottom:1px solid #eee;
 }
 
 ul#HeaderMenu {
@@ -35,7 +31,6 @@ ul#HeaderMenu {
 	padding-left:10px;
 	padding-right:5px;
 	text-align:left;
-	-webkit-margin-before: 1em;
 }
 
 li.menu{
@@ -44,13 +39,19 @@ li.menu{
 	display:-webkit-inline-box;
 }
 
+a{
+	text-decoration:none;
+}
+
 a.Menu{
-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 500;
 	line-height: 1.1;
 	color: #999;
 	font-size:24px;
-	text-decoration:none;
+	text-decoration: none;
+	transition: color 0.5s;
+	-webkit- transition: color 0.5s;
 }
 
 a.Menu:hover{
