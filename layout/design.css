@@ -72,6 +72,31 @@ p{
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 500;
 	line-height: 1.3;
-	font-size:18;
+	font-size:15px;
 	color:#999;
+}
+
+div#post{
+	width:40em;
+	border:10px;
+	padding-top: 10px 20px;
+	border:#DEDEDE solid 1px;
+}
+
+h1#posthead{
+	font-size:1.8em;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: 500;
+	line-height: 1.1;
+	border-bottom: 3px solid black;
+	transition: color 2s,border-bottom-color 1s;
+	-webkit- transition: color 2s,border-bottom-color 1s;
+}
+
+h1#posthead:hover{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight: 500;
+	line-height: 1.1;
+	border-bottom-color: #EB8931;
+	color:#EB8931;
 }
