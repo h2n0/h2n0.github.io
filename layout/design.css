@@ -12,7 +12,7 @@ h1 small{
 	font-size:24px;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, li, ul, p, a{
+body{
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 500;
 	line-height: 1.1;
@@ -52,9 +52,6 @@ a{
 }
 
 a.Menu{
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight: 500;
-	line-height: 1.1;
 	color: #999;
 	font-size:24px;
 	text-decoration: none;
@@ -69,11 +66,15 @@ a.Menu:hover{
 }
 
 p{
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight: 500;
+	
 	line-height: 1.3;
 	font-size:15px;
 	color:#999;
+}
+
+p#underHead{
+	font-size:10px;
+	color:#404040;
 }
 
 div#post{

@@ -1,0 +1,25 @@
+
+body {
+  background-color: #000;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 15px;
+}
+
+h1, p {
+  color: #FFF;
+  text-align:center;
+}
+
+h1#updateHead{
+  text-align:left;
+}
+li{color:#FFF;}
+
+canvas#can{
+  background-color:#FFF;
+  display: table;
+  margin: 0 auto;
+}
