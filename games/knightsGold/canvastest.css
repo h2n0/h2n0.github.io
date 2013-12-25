@@ -1,7 +1,7 @@
 
 body {
   background-color: #000;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.2em;
@@ -11,6 +11,15 @@ body {
 h1, p {
   color: #FFF;
   text-align:center;
+}
+h1#red{
+  color:#D04648;
+ display: inline-block;
+}
+h1#yellow{
+ color:#DAD45E; 
+ display: inline-block;
+ 
 }
 
 h1#updateHead{
