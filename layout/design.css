@@ -101,3 +101,7 @@ h1#posthead:hover{
 	border-bottom-color: #EB8931;
 	color:#EB8931;
 }
+
+a#gameLink{
+	color:#999;
+}
