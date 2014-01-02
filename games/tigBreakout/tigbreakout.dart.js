@@ -2422,7 +2422,7 @@ x=new P.hL(y,x)
 H.VM(x,[H.W8(this,"hL",0)])
 return x},
 $ishL:true},IN:{"":"a;",
-bu:function(a){return"Rectangle ("+H.d(this.gBb())+", "+H.d(this.G6)+") "+this.R+" x "+this.fg},
+bu:function(a){return"Rectangle ("+H.d(this.gBb())+", "+H.d(this.G6)+") "+H.d(this.R)+" x "+H.d(this.fg)},
 n:function(a,b){var z,y
 if(b==null)return!1
 z=J.x(b)
@@ -2431,28 +2431,40 @@ z=this.gBb()
 y=b.Bb
 if(z==null?y==null:z===y){z=this.G6
 y=b.G6
-z=(z==null?y==null:z===y)&&this.R===b.R&&this.fg===b.fg}else z=!1
+if(z==null?y==null:z===y){z=this.R
+y=b.R
+if(z==null?y==null:z===y){z=this.fg
+y=b.fg
+y=z==null?y==null:z===y
+z=y}else z=!1}else z=!1}else z=!1
 return z},
 gtU:function(a){var z,y,x,w
 z=J.Dk(this.gBb())
 y=J.Dk(this.G6)
-x=this.R&0x1FFFFFFF
-w=this.fg&0x1FFFFFFF
+x=J.Dk(this.R)
+w=J.Dk(this.fg)
 return P.Up(P.C0(P.C0(P.C0(P.C0(0,z),y),x),w))},
 x0:function(a){var z,y,x
 z=this.gBb()
 y=a.Bb
 x=a.R
 if(typeof y!=="number")throw y.g()
+if(typeof x!=="number")throw H.s(x)
 if(typeof z!=="number")throw z.E()
 if(z<=y+x){z=this.Bb
+x=this.R
 if(typeof z!=="number")throw z.g()
-if(y<=z+this.R){z=this.G6
+if(typeof x!=="number")throw H.s(x)
+if(y<=z+x){z=this.G6
 y=a.G6
 x=a.fg
 if(typeof y!=="number")throw y.g()
+if(typeof x!=="number")throw H.s(x)
 if(typeof z!=="number")throw z.E()
-z=z<=y+x&&y<=z+this.fg}else z=!1}else z=!1
+if(z<=y+x){x=this.fg
+if(typeof x!=="number")throw H.s(x)
+x=y<=z+x
+z=x}else z=!1}else z=!1}else z=!1
 return z}},tn:{"":"IN;Bb<,G6,R,fg",$istn:true,$asIN:null}}],["dart.typed_data","dart:typed_data",,P,{AS:{"":"Pu;",
 aq:function(a,b,c){var z=J.Wx(b)
 if(z.C(b,0)||z.F(b,c))throw H.b(P.TE(b,0,c))
@@ -2615,24 +2627,12 @@ z.e6(a)
 z=z.gXn(a)
 if(0>=z.length)throw H.e(z,0)
 z=z[0]
-H.VM(new P.hL(z.pageX,z.pageY),[null])
-z=new P.hL(a.layerX,a.layerY)
+z=new P.hL(z.clientX,z.clientY)
 H.VM(z,[null])
-z=z.x
-if(typeof z!=="number")throw z.W()
-if(z-16>=32){z=new P.hL(a.layerX,a.layerY)
-H.VM(z,[null])
-z=z.x
-if(typeof z!=="number")throw z.g()
-z=z+16>225}else z=!0
-if(z)return
-if($.ZQ===0){z=$.jk
-y=a.touches
-if(0>=y.length)throw H.e(y,0)
-y=y[0]
-y=new P.hL(y.pageX,y.pageY)
-H.VM(y,[null])
-z.CK=y.x}},AZ:function(a){var z,y,x,w,v
+y=z.x
+if(typeof y!=="number")throw y.W()
+if(y-16<32||y+16>225)return
+if($.ZQ===0)$.jk.CK=y},AZ:function(a){var z,y,x,w,v
 J.fD(a)
 if($.ZQ===0)if($.wl!==50){if(!$.If){z=$.jk
 y=z.x
@@ -2697,9 +2697,7 @@ static:{pV:function(a,b,c){var z=new S.Zg(null,null,null,null,!1)
 z.EO(a,b,c)
 return z}}},nK:{"":"qn;CK,dG<,x,y,Rt",
 Zf:function(){var z,y
-z=this.CK
-if(typeof z!=="number")throw z.W()
-this.x=z-32
+this.x=this.CK-32
 z=new P.tn(this.x,this.y,32,9)
 H.VM(z,[null])
 this.dG=z
@@ -2710,6 +2708,7 @@ z=this.dG
 y=z.Bb
 z=z.R
 if(typeof y!=="number")throw y.g()
+if(typeof z!=="number")throw H.s(z)
 if(y+z>320)this.CK=320},
 T1:function(){$.Ee.drawImage($.Ho,this.x,this.y)}},zC:{"":"qn;qK,rq,aK,v3,UK,VU,i7,xG,x,y,Rt",
 Zf:function(){var z,y
@@ -2735,8 +2734,10 @@ if(typeof z!=="number")throw z.C()
 if(z<31){this.x=31
 this.rq=-this.rq}z=this.UK
 y=z.Bb
+z=z.R
 if(typeof y!=="number")throw y.g()
-if(y+z.R>225){this.x=217
+if(typeof z!=="number")throw H.s(z)
+if(y+z>225){this.x=217
 this.rq=-this.rq}z=this.y
 if(typeof z!=="number")throw z.F()
 if(z>=240)this.nY()
