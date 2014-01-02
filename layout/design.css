@@ -81,7 +81,7 @@ div#post{
 	width:40em;
 	border:10px;
 	padding-top: 10px 20px;
-	border:#DEDEDE solid 1px;
+	border-bottom:#DEDEDE solid 1px;
 }
 
 h1#posthead{

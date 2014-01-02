@@ -1,6 +1,6 @@
 
 body {
-  background-color: #000;
+  background-color: #D7E5D0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   font-weight: normal;
@@ -32,4 +32,5 @@ canvas#can{
   background-color:#FFF;
   display: table;
   margin: 0 auto;
+  cursor:none;
 }
