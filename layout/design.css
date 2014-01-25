@@ -105,3 +105,13 @@ h1#posthead:hover{
 a#gameLink{
 	color:#999;
 }
+
+p#_4Sub{
+	text-align:center;
+}
+
+h1#_404{
+	width:100%;
+	text-align:center;
+	text-decoration:underline;
+}
