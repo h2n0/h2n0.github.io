@@ -532,7 +532,8 @@ Game.EntityMixins.FoodConsumer = {
         }
     },
     getHungerPercent: function(){
-        return Math.floor(this._fullness / this._maxFullness) * 100;
+        var h = Math.floor((this._fullness / this._maxFullness) * 100);
+        return h;
     }
 };
 
