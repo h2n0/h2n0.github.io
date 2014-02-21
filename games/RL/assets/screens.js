@@ -1,14 +1,45 @@
 Game.Screen = {};
 
+
+Game.Screen.introScreen ={
+    refresh:0,
+    enter: function(){console.log('Starting');},
+    exit: function(){console.log('Moving on');},
+    render: function(display){
+        var color = ["#EB8931","#F7E26B","#A46422"];
+        // ASCII art for FLS logo
+        var lines = ["     __","    \\ \\"," | /  ","   / / ","  / /  /\\","  / /  / \\","  /  \\ /   \\","  |   \\    |","  |        |", " \\       / ","  \\_____/","Fire Leaf Studios presents"];
+        for(var i = 0; i < lines.length - 1; i++){
+            var flameCol = color[Math.round(Math.random())];
+            display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2,4 + i,"%c{"+flameCol+"}"+lines[i]);
+        }
+        display.drawText(Game.getScreenWidth() / 2 - lines[lines.length - 1].length / 2, 5 + lines.length, "%c{"+color[0]+"}"+lines[lines.length - 1]);
+    },
+    handleInput: function(inputType, inputData){
+        if (inputType === 'keydown') {
+            if (inputData.keyCode != ROT.VK_RETURN) {
+                Game.refresh();
+                this.refresh ++;
+            }else{
+                Game.switchScreen(Game.Screen.startScreen);
+            }
+        }
+    }
+};
+
 // Define our initial start screen
 Game.Screen.startScreen = {
     enter: function() {    console.log("Entered start screen."); },
     exit: function() { console.log("Exited start screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(1,1, "%c{yellow}Roguelike V0.2");
-        display.drawText(1,2, "Press [Enter] to start!");
-        display.drawText(1,3, "Press [Shift] + [?] while playing to display help");
+        var lines = ["Roguelike", "Press [Enter] to start"];
+        var color = ["#00FFFF","#FF00FF","#FFFF00","#7C7C7C"];
+        var roCol = ROT.Color.randomize([100, 128, 130], [50, 20, 40]);
+        for(var i = 0; i < lines.length; i++)
+        display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2,10 + i+(i % 2), "%c{"+(i==0?ROT.Color.toRGB(roCol):color[color.length-1])+"}"+lines[i]);
+       // display.drawText(1,2, "Press [Enter] to start!");
+       // display.drawText(1,3, "Press [Shift] + [?] while playing to display help");
     },
     handleInput: function(inputType, inputData) {
         // When [Enter] is pressed, go to the play screen

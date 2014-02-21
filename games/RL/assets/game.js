@@ -68,6 +68,7 @@ window.onload = function() {
         Game.getDisplay().getContainer().id = "can";
         document.body.appendChild(Game.getDisplay().getContainer());
         // Load the start screen
-        Game.switchScreen(Game.Screen.startScreen);
+        Game.switchScreen(Game.Screen.introScreen);
+
     }
 }
