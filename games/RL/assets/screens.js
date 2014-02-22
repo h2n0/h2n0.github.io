@@ -2,25 +2,27 @@ Game.Screen = {};
 
 
 Game.Screen.introScreen ={
-    refresh:0,
-    enter: function(){console.log('Starting');},
+    refreshs:0,
+    enter: function(){console.log('Starting')},
     exit: function(){console.log('Moving on');},
     render: function(display){
         var color = ["#EB8931","#F7E26B","#A46422"];
         // ASCII art for FLS logo
-        var lines = ["     __","    \\ \\"," | /  ","   / / ","  / /  /\\","  / /  / \\","  /  \\ /   \\","  |   \\    |","  |        |", " \\       / ","  \\_____/","Fire Leaf Studios presents"];
-        for(var i = 0; i < lines.length - 1; i++){
+        var lines = ["     __","    \\ \\"," | /  ","   / / ","  / /  /\\","  / /  / \\","  /  \\ /   \\","  |   \\    |","  |        |", " \\       / ","  \\_____/","Fire Leaf Studios presents","Press [Enter] to move on"];
+        for(var i = 0; i < lines.length - 2; i++){
             var flameCol = color[Math.round(Math.random())];
             display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2,4 + i,"%c{"+flameCol+"}"+lines[i]);
         }
-        display.drawText(Game.getScreenWidth() / 2 - lines[lines.length - 1].length / 2, 5 + lines.length, "%c{"+color[0]+"}"+lines[lines.length - 1]);
+        display.drawText(Game.getScreenWidth() / 2 - lines[lines.length - 2].length / 2, 5 + lines.length, "%c{"+color[0]+"}"+lines[lines.length - 2]);
+        if(this.refreshs >= 10){
+            Game.switchScreen(Game.Screen.startScreen);
+        }
+        this.refreshs++;
+        setTimeout(function(){Game.refresh();},800);
     },
     handleInput: function(inputType, inputData){
         if (inputType === 'keydown') {
-            if (inputData.keyCode != ROT.VK_RETURN) {
-                Game.refresh();
-                this.refresh ++;
-            }else{
+            if (inputData.keyCode == ROT.VK_RETURN) {
                 Game.switchScreen(Game.Screen.startScreen);
             }
         }
@@ -30,14 +32,14 @@ Game.Screen.introScreen ={
 // Define our initial start screen
 Game.Screen.startScreen = {
     enter: function() {    console.log("Entered start screen."); },
-    exit: function() { console.log("Exited start screen."); },
+    exit: function() { console.log("Exited start screen.");Game.playSound("Start");},
     render: function(display) {
         // Render our prompt to the screen
         var lines = ["Roguelike", "Press [Enter] to start"];
         var color = ["#00FFFF","#FF00FF","#FFFF00","#7C7C7C"];
         var roCol = ROT.Color.randomize([100, 128, 130], [50, 20, 40]);
         for(var i = 0; i < lines.length; i++)
-        display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2,10 + i+(i % 2), "%c{"+(i==0?ROT.Color.toRGB(roCol):color[color.length-1])+"}"+lines[i]);
+        display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2,11 + i+(i % 2), "%c{"+(i==0?ROT.Color.toRGB(roCol):color[color.length-1])+"}"+lines[i]);
        // display.drawText(1,2, "Press [Enter] to start!");
        // display.drawText(1,3, "Press [Shift] + [?] while playing to display help");
     },
@@ -210,6 +212,8 @@ Game.Screen.playScreen = {
                 this.showItemsSubScreen(Game.Screen.inventoryScreen, this._player.getItems(),
                     'You are not carrying anything.');
                 return;
+            }else if(inputData.keyCode == ROT.VK_R){
+                this.rest();
             } else if (inputData.keyCode === ROT.VK_D) {
                 // Show the drop screen
                 this.showItemsSubScreen(Game.Screen.dropScreen, this._player.getItems(),
@@ -289,6 +293,7 @@ Game.Screen.playScreen = {
         var newZ = this._player.getZ() + dZ;
         // Try to move to the new cell
         this._player.tryMove(newX, newY, newZ, this._player.getMap());
+        console.log("Player: X:" +newX + ", Y: " + newY + ", Z: "+ newZ);
     },
     setGameEnded: function(gameEnded) {
         this._gameEnded = gameEnded;
@@ -305,11 +310,14 @@ Game.Screen.playScreen = {
             Game.sendMessage(this._player, emptyMessage);
             Game.refresh();
         }
+    },
+    rest: function(){
+        Game.sendMessage(this._player,this._player.canIncreaseHp(2)?"You feel refreshed":"Your health is already full");
     }
 };
 
 // Define our winning screen
-Game.Screen.winScreen = {
+Game.Screen.quest1WinScreen = {
     enter: function() { console.log("Entered win screen."); },
     exit: function() { console.log("Exited win screen."); },
     render: function(display) {
@@ -334,12 +342,13 @@ Game.Screen.loseScreen = {
     enter: function() {    console.log("Entered lose screen."); },
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
-        var lines = ["Sadly you have perrished on your nobal quest"," _____"," /     \\"," |()  ()|","\\  ^  / ","||||| ","||||| ","Press [Enter] to go to the title screen"];
+        var color = ["#FFFFFF","#A8A8A8"];
+        var lines = ["Sadly you have perrished on your noble quest"," _____"," /     \\"," |()  ()|","\\  ^  / ","||||| ","||||| ","Press [Enter] to go to the title screen"];
         for(var i = 0; i < lines.length; i++){
             if(i == 0){
                 display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2, 8 + i + 1 ,lines[i]);
             }else if( i > 0 && i != lines.length - 1){
-                display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2, 9 + i ,lines[i]);
+                display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2, 9 + i ,"%c{"+color[i%2]+"}"+lines[i]);
             }else{
                 display.drawText(Game.getScreenWidth() / 2 - lines[i].length / 2, 10 + i, lines[i]);
             }
@@ -839,6 +848,7 @@ Game.Screen.helpScreen = {
         display.drawText(0, y++, '[w] + [Shift] to wield items');
         display.drawText(0, y++, '[x] to examine items');
         display.drawText(0, y++, '[;] to look around you');
+        display.drawText(0, y++, '[R] to heal yourself');
         display.drawText(0, y++, '[?] to show this help screen');
         y += 3;
         text = '----- press any key to continue -----';

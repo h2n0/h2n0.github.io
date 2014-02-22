@@ -54,6 +54,9 @@ var Game =  {
             this._currentScreen.enter();
             this.refresh();
         }
+    },
+    playSound: function(name){
+        new Audio("sounds/"+name+".wav").play();
     }
 }
 

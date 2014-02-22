@@ -188,8 +188,8 @@ Game.EntityMixins.GiantZombieActor = Game.extend(Game.EntityMixins.TaskActor, {
     },
     listeners: {
         onDeath: function(attacker) {
-            // Switch to win screen when killed!
-            Game.switchScreen(Game.Screen.winScreen);
+            Game.sendMessage(this.getMap().getPlayer(),"Zombie is dead");
+            Game.setM
         }
     }
 });
@@ -293,7 +293,6 @@ Game.EntityMixins.Destructible = {
         value = value || 10;
         // Add to both max HP and HP.
         this._maxHp += value;
-        this._hp += value;
         Game.sendMessage(this, "You look healthier!");
     },
     takeDamage: function(attacker, damage) {
@@ -318,6 +317,14 @@ Game.EntityMixins.Destructible = {
                 {key: 'hp', value: this.getHp()}
             ];
         }
+    },
+    canIncreaseHp:function(value){
+        if(this._hp == this._maxHp)return false;
+        this._hp += value;
+        if(this._hp > this._maxHp){
+            this._hp = this._maxHp;
+        }
+        return true;
     }
 };
 
@@ -603,14 +610,14 @@ Game.EntityMixins.ExperienceGainer = {
         // Determine what stats can be levelled up.
         this._statOptions = [];
         if (this.hasMixin('Attacker')) {
-            this._statOptions.push(['Increase attack value', this.increaseAttackValue]);
+            this._statOptions.push(['Increase attack value (current level:'+this.getAttackValue()+')', this.increaseAttackValue]);
         }
         if (this.hasMixin('Destructible')) {
-            this._statOptions.push(['Increase defense value', this.increaseDefenseValue]);   
-            this._statOptions.push(['Increase max health', this.increaseMaxHp]);
+            this._statOptions.push(['Increase defense value (current level:'+this.getDefenseValue()+')', this.increaseDefenseValue]);   
+            this._statOptions.push(['Increase max health (current level:'+this.getMaxHp()+')', this.increaseMaxHp]);
         }
         if (this.hasMixin('Sight')) {
-            this._statOptions.push(['Increase sight range', this.increaseSightRadius]);
+            this._statOptions.push(['Increase sight range (current level:'+this.getSightRadius()+')', this.increaseSightRadius]);
         }
     },
     getLevel: function() {

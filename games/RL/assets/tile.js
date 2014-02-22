@@ -44,14 +44,14 @@ Game.Tile.stairsUpTile = new Game.Tile({
     foreground: 'white',
     walkable: true,
     blocksLight: false,
-    description: 'A rock staircase leading upwards'
+    description: 'A stone staircase leading upwards'
 });
 Game.Tile.stairsDownTile = new Game.Tile({
     character: '>',
     foreground: 'white',
     walkable: true,
     blocksLight: false,
-    description: 'A rock staircase leading downwards'
+    description: 'A stone staircase leading downwards'
 });
 Game.Tile.holeToCavernTile = new Game.Tile({
     character: 'O',
@@ -66,6 +66,27 @@ Game.Tile.waterTile = new Game.Tile({
     walkable: false,
     blocksLight: false,
     description: 'Murky blue water'
+});
+Game.Tile.shopTile = new Game.Tile({
+    character: 'H',
+    foreground: 'yellow',
+    walkable: true,
+    blocksLight: false,
+    description: 'A small shop'
+});
+Game.Tile.solidWall = new Game.Tile({
+    character: '#',
+    foreground: '#CCCCCC',
+    walkable: false,
+    diggable: false,
+    description: 'A wall used to keep monsters out and goods in'
+});
+Game.Tile.shopDoor = new Game.Tile({
+    character: '+',
+    foreground: '#964B00',
+    walkable: true,
+    diggable: false,
+    description: 'A door used to enter and leave the building'
 });
 
 // Helper function

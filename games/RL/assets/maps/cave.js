@@ -28,12 +28,16 @@ Game.Map.Cave = function(tiles, player) {
     var templates = ['dagger', 'sword', 'staff', 
         'tunic', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
-        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
-            Math.floor(this._depth * Math.random()));
+        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),Math.floor(this._depth * Math.random()));
     }
     // Add a hole to the final cavern on the last level.
     var holePosition = this.getRandomFloorPosition(this._depth - 1);
-    this._tiles[this._depth - 1][holePosition.x][holePosition.y] = 
-        Game.Tile.holeToCavernTile;
+    this._tiles[this._depth - 1][holePosition.x][holePosition.y] = Game.Tile.holeToCavernTile;
+
+    var shopPos = this.getRandomFloorPosition(Math.round(Math.random()));
+    var shopZ = (Math.round(Math.random()) == 1? 3 : 1);
+    this._tiles[shopZ - 1][shopPos.x][shopPos.y] = Game.Tile.shopTile;
+    console.log("Z: "+shopZ + ", X: " + shopPos.x + ", Y: " + shopPos.y);
+
 };
 Game.Map.Cave.extend(Game.Map);
