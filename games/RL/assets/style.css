@@ -2,7 +2,7 @@ body{
 	background-color:#303030;
 }
 canvas#can{
-	padding-left: 0;
+    padding-left: 0;
     padding-right: 0;
     margin: auto;
     display: block;
