@@ -1,0 +1,17 @@
+
+canvas#can{
+    border: 1px solid black;
+}
+
+div#banner{
+	position: fixed;
+	bottom:2px;
+	right:4px;
+	margin: 0px;
+	color:#A0A0A0;
+	font:400 14px monospace;
+	vertical-align: baseline;
+}
+#stats {
+    width:500px;
+}
