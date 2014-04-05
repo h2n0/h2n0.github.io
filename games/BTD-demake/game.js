@@ -1,8 +1,9 @@
 window.onload = function () {
+    "use strict";
     (function () {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
         window.requestAnimationFrame = requestAnimationFrame;
-    })();
+    }());
 
     var canvas = document.getElementById("can"),
         ctx = canvas.getContext("2d"),
@@ -17,13 +18,15 @@ window.onload = function () {
     function setStats(tower) {
         var k = document.getElementById("kills"),
             e = document.getElementById("exp"),
-            kills = tower.kills,
-            exp = tower.exp;
+            kills,
+            exp;
         if (tower === null) {
             k.innerHTML = "";
             e.innerHTML = "";
             return;
         }
+        kills = tower.kills;
+        exp = tower.exp;
         k.innerHTML = "Kills:" + kills;
         e.innerHTML = "EXP:" + exp;
     }
@@ -165,13 +168,15 @@ window.onload = function () {
     }
 
     Tower.prototype.update = function () {
+        var dir = 0,
+            i,
+            target,
+            x,
+            y;
         if (this.crntcool > 0) {
             this.crntcool -= 1;
         }
         if (this.crntcool === 0) {
-            var dir = 0,
-                i,
-                target;
             for (i = 0; i < entitys.length; i += 1) {
                 if (this.crntcool > 0) {
                     break;
@@ -179,8 +184,8 @@ window.onload = function () {
                 target = entitys[i];
                 if (target instanceof Enemy) {
                     if (Math.random() * 4 < 1) {
-                        var x = this.x - target.x;
-                        var y = this.y - target.y;
+                        x = this.x - target.x;
+                        y = this.y - target.y;
                         if (checkDist(this, target) <= this.range + this.extraRange) {
                             dir = Math.atan2(y, x);
                             this.crntcool = this.cooldown;
@@ -205,91 +210,114 @@ window.onload = function () {
             ctx.fill();
         }
         if (this.leveled) {
-            var b;
-            for (b = 0; b < 2; b += 1) {
+            for (i = 0; i < 2; i += 1) {
                 entitys.push(new Particle(this.x, this.y));
             }
             this.leveled = false;
         }
         ctx.fillStyle = "#777";
         ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
-    }
+    };
 
     Tower.prototype.levelUp = function () {
         this.stats.exp = 0;
-        if (this.extraRange < 30)
+        if (this.extraRange < 30) {
             this.extraRange += 5;
-        if (this.cooldown > 40)
+        }
+        if (this.cooldown > 40) {
             this.cooldown -= 5;
+        }
         this.leveled = true;
-    }
+    };
 
     function spawnEnemys(amt) {
-        if (amt == null) amt = 10;
-        for (var i = 0; i < amt; i++)
+        var i;
+        if (amt === null) {
+            amt = 10;
+        }
+        for (i = 0; i < amt; i += 1) {
             entitys.push(new Enemy(-10 - (i * 15)));
+        }
     }
 
     function checkEnemyAmt() {
-        var amt = 0;
-        for (var i = 0; i < entitys.length; i++) {
-            if (entitys[i] instanceof Enemy) amt++;
+        var amt = 0,
+            i;
+        for (i = 0; i < entitys.length; i += 1) {
+            if (entitys[i] instanceof Enemy) {
+                amt += 1;
+            }
         }
         return amt;
     }
 
     function update() {
         ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < entitys.length; i++) {
-            var c = entitys[i];
+        var i, c;
+        for (i = 0; i < entitys.length; i += 1) {
+            c = entitys[i];
             c.update();
-            if ((c instanceof Projectile || c instanceof Enemy || c instanceof Particle))
-                if (c.removed) entitys.splice(i, 1);
+            if ((c instanceof Projectile || c instanceof Enemy || c instanceof Particle)) {
+                if (c.removed) {
+                    entitys.splice(i, 1);
+                }
+            }
         }
-        if (checkEnemyAmt() == 0) spawnEnemys(16);
-        requestAnimationFrame(update);
+        if (checkEnemyAmt() === 0) {
+            spawnEnemys(16);
+        }
+        window.requestAnimationFrame(update);
+    }
+
+    function deselect() {
+        var i;
+        for (i = 0; i < entitys.length; i += 1) {
+            if (entitys[i] instanceof Tower) {
+                entitys[i].selected = false;
+            }
+        }
     }
 
     canvas.onmousedown = function (event) {
         event.preventDefault();
         var x = event.layerX,
-            y = event.layerY;
-        for (var i = 0; i < entitys.length; i++) {
-            var c = entitys[i];
-            if ((c instanceof Tower)) {
-                var dx = c.x - x,
-                    dy = c.y - y,
-                    dist = Math.sqrt(dx * dx + dy * dy);
+            y = event.layerY,
+            i,
+            c,
+            dx,
+            dy,
+            dist;
+        for (i = 0; i < entitys.length; i += 1) {
+            c = entitys[i];
+            if (c instanceof Tower) {
+                dx = c.x - x;
+                dy = c.y - y;
+                dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist <= c.width) {
-                    for (var i = 0; i < entitys.length; i++) {
-                        if (entitys[i] instanceof Tower) entitys[i].selected = false;
-                    }
+                    deselect();
                     setStats(c.stats);
                     c.selected = true;
                     return;
-                };
+                }
             }
         }
-        if (money >= 100 && event.detail == 2) {
+        if (money >= 100 && event.detail === 2) {
             money -= 100;
             entitys.push(new Tower(event.layerX, event.layerY));
         }
-
-        if (event.detail == 1) {
-            setStats(null);
-            for (var i = 0; i < entitys.length; i++) {
+        if (event.detail === 1) {
+            for (i = 0; i < entitys.length; i += 1) {
                 if (entitys[i] instanceof Tower) {
                     entitys[i].selected = false;
                 }
             }
         }
-    }
+    };
 
     function init() {
-        console.log("init");
         spawnEnemys(16);
         update();
     }
 
     init();
-}
+};
