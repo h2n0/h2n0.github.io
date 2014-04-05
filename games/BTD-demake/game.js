@@ -23,12 +23,12 @@ window.onload = function () {
         if (tower === null) {
             k.innerHTML = "";
             e.innerHTML = "";
-            return;
+        } else {
+            kills = tower.kills;
+            exp = tower.exp;
+            k.innerHTML = "Kills:" + kills;
+            e.innerHTML = "EXP:" + exp;
         }
-        kills = tower.kills;
-        exp = tower.exp;
-        k.innerHTML = "Kills:" + kills;
-        e.innerHTML = "EXP:" + exp;
     }
 
     function checkDist(obj, obj2) {
@@ -37,17 +37,19 @@ window.onload = function () {
         return Math.sqrt(x * x + y * y);
     }
 
-    function Enemy(ox) {
+    function Enemy(ox, oy, size) {
         this.x = ox;
+        this.y = oy;
         this.width = 10;
+        this.size = size;
         this.reset();
     }
 
     Enemy.prototype.reset = function () {
-        this.speed = 0.75 * 3;
-        this.y = 10;
+        this.speed = 0.75 * 3 * this.size / 2;
         this.vx = this.speed;
         this.vy = 0;
+        this.colors = ["#000", "#F00", "#0cf"];
     };
 
     Enemy.prototype.update = function () {
@@ -69,8 +71,20 @@ window.onload = function () {
             this.x = -10;
             this.y = 10;
         }
-        ctx.fillStyle = "#F00";
+        ctx.fillStyle = this.colors[this.size];
         ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
+    };
+
+    Enemy.prototype.downsize = function () {
+        this.size -= 1;
+        var i,
+            ne;
+        for (i = 0; i < 2; i += 1) {
+            ne = new Enemy(this.x + (this.vx * this.width * i), this.y + (this.vy * this.width * i), this.size);
+            ne.vx = ne.speed * (this.vx / this.speed);
+            ne.vy = ne.speed * (this.vy / this.speed);
+            entitys.push(ne);
+        }
     };
 
     Enemy.prototype.isIn = function (x1, x2, y1, y2) {
@@ -99,12 +113,22 @@ window.onload = function () {
             if (target instanceof Enemy) {
                 if (checkDist(this, target) <= this.width + target.width) {
                     this.removed = true;
-                    target.removed = true;
                     money += 10;
                     this.tower.stats.kills += 1;
                     this.tower.stats.exp += 10;
                     if (this.tower.stats.exp >= 100) {
                         this.tower.levelUp();
+                    }
+                    if (this.tower.selected) {
+                        setStats(this.tower.stats);
+                    }
+                    if (target.size >= 2) {
+                        target.removed = true;
+                        target.downsize();
+                        break;
+                    } else {
+                        target.removed = true;
+                        break;
                     }
                 }
             }
@@ -230,13 +254,14 @@ window.onload = function () {
         this.leveled = true;
     };
 
-    function spawnEnemys(amt) {
-        var i;
+    function spawnEnemys(amt, s) {
+        var i,
+            size = s || 1;
         if (amt === null) {
             amt = 10;
         }
         for (i = 0; i < amt; i += 1) {
-            entitys.push(new Enemy(-10 - (i * 15)));
+            entitys.push(new Enemy(-10 - (i * 15), 10, size));
         }
     }
 
@@ -264,7 +289,7 @@ window.onload = function () {
             }
         }
         if (checkEnemyAmt() === 0) {
-            spawnEnemys(16);
+            spawnEnemys(16, 2);
         }
         window.requestAnimationFrame(update);
     }
@@ -276,6 +301,7 @@ window.onload = function () {
                 entitys[i].selected = false;
             }
         }
+        setStats(null);
     }
 
     canvas.onmousedown = function (event) {
@@ -293,8 +319,8 @@ window.onload = function () {
                 dx = c.x - x;
                 dy = c.y - y;
                 dist = Math.sqrt(dx * dx + dy * dy);
+                deselect();
                 if (dist <= c.width) {
-                    deselect();
                     setStats(c.stats);
                     c.selected = true;
                     return;
@@ -305,17 +331,10 @@ window.onload = function () {
             money -= 100;
             entitys.push(new Tower(event.layerX, event.layerY));
         }
-        if (event.detail === 1) {
-            for (i = 0; i < entitys.length; i += 1) {
-                if (entitys[i] instanceof Tower) {
-                    entitys[i].selected = false;
-                }
-            }
-        }
     };
 
     function init() {
-        spawnEnemys(16);
+        spawnEnemys(16, 2);
         update();
     }
 
