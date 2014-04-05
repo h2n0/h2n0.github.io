@@ -77,6 +77,7 @@ div#post{
 	border:10px;
 	padding-top: 10px 20px;
 	border-bottom:#DEDEDE solid 1px;
+    word-wrap: normal;
 }
 
 h1#posthead{
