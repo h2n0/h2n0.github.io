@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
     (function () {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
         window.requestAnimationFrame = requestAnimationFrame;
@@ -13,28 +13,28 @@ window.onload = function(){
 
     canvas.width = width;
     canvas.height = height;
-    
-    function setStats(tower){
+
+    function setStats(tower) {
         var k = document.getElementById("kills"),
-            e = document.getElementById("exp");
-        if(tower == null){
+            e = document.getElementById("exp"),
+            kills = tower.kills,
+            exp = tower.exp;
+        if (tower === null) {
             k.innerHTML = "";
             e.innerHTML = "";
             return;
         }
-        var kills = tower.kills || 0,
-            exp = tower.exp || 0;
-        k.innerHTML = "Kills:"+kills;
-        e.innerHTML = "EXP:"+exp;
-    }
-    
-    function checkDist(obj,obj2){
-        var x = obj2.x - obj.x,
-            y = obj2.y - obj.y;
-        return Math.sqrt(x * x + y * y)
+        k.innerHTML = "Kills:" + kills;
+        e.innerHTML = "EXP:" + exp;
     }
 
-    function Enemy(ox){
+    function checkDist(obj, obj2) {
+        var x = obj2.x - obj.x,
+            y = obj2.y - obj.y;
+        return Math.sqrt(x * x + y * y);
+    }
+
+    function Enemy(ox) {
         this.x = ox;
         this.width = 10;
         this.reset();
@@ -50,33 +50,35 @@ window.onload = function(){
     Enemy.prototype.update = function () {
         this.x += this.vx;
         this.y += this.vy;
-        if(this.isIn(485,490,5,15)){
+        if (this.isIn(485, 490, 5, 15)) {
             this.vy = this.speed;
             this.vx = 0;
-        }
-        else if(this.isIn(485,490,70,80)){
+        } else if (this.isIn(485, 490, 70, 80)) {
             this.vx = -this.speed;
             this.vy = 0;
-        }else if(this.isIn(5,10,70,80)){
+        } else if (this.isIn(5, 10, 70, 80)) {
             this.vx = 0;
             this.vy = this.speed;
-        }else if(this.isIn(5,10,140,150)){
+        } else if (this.isIn(5, 10, 140, 150)) {
             this.vx = this.speed;
             this.vy = 0;
-        }else if(this.isIn(500+this.width/2,510,140,150)){
+        } else if (this.isIn(500 + this.width / 2, 510, 140, 150)) {
             this.x = -10;
             this.y = 10;
         }
-        ctx.fillStyle="#F00";
-        ctx.fillRect(this.x - this.width/2, this.y - this.width/2,this.width,this.width);
+        ctx.fillStyle = "#F00";
+        ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
     };
-    
-    Enemy.prototype.isIn = function(x1,x2,y1,y2){
-        if(this.x >= x1 && this.x <= x2 && this.y >= y1 && this.y <= y2)return true;
-        else return false;
-    }
-    
-    function Projectile(x,y,dir,owner){
+
+    Enemy.prototype.isIn = function (x1, x2, y1, y2) {
+        if (this.x >= x1 && this.x <= x2 && this.y >= y1 && this.y <= y2) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    function Projectile(x, y, dir, owner) {
         this.x = x;
         this.y = y;
         this.vx = Math.cos(dir) * 3;
@@ -84,34 +86,37 @@ window.onload = function(){
         this.width = 4;
         this.tower = owner;
     }
-    
-    Projectile.prototype.update = function(){
+
+    Projectile.prototype.update = function () {
         this.x -= this.vx;
         this.y -= this.vy;
-        for(var i = 0; i < entitys.length; i++){
-            var target = entitys[i];
-            if(!(target instanceof Enemy))continue;
-            else{
-                if(checkDist(this,target) <= this.width + target.width){
+        var i, target;
+        for (i = 0; i < entitys.length; i += 1) {
+            target = entitys[i];
+            if (target instanceof Enemy) {
+                if (checkDist(this, target) <= this.width + target.width) {
                     this.removed = true;
                     target.removed = true;
-                    money+=10;
-                    this.tower.stats.kills++;
+                    money += 10;
+                    this.tower.stats.kills += 1;
                     this.tower.stats.exp += 10;
-                    if(this.tower.stats.exp >= 100)
+                    if (this.tower.stats.exp >= 100) {
                         this.tower.levelUp();
+                    }
                 }
             }
         }
-        if((this.x + this.width/2 <= 0 && this.y + this.width / 2 <= 0) || (this.x - this.width/2 >= width && this.y - this.width/2 >= height))this.removed = true;
+        if ((this.x + this.width / 2 <= 0 && this.y + this.width / 2 <= 0) || (this.x - this.width / 2 >= width && this.y - this.width / 2 >= height)) {
+            this.removed = true;
+        }
         ctx.fillStyle = "#FFFF00";
-        ctx.fillRect(this.x - this.width/2, this.y - this.width/2,this.width,this.width);
-    }
-    
-    function Particle(x,y){
+        ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
+    };
+
+    function Particle(x, y) {
         this.x = x;
         this.y = y;
-        this.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+        this.color = '#' + Math.floor(Math.random() * 16777215).toString(16);
         this.x1 = x;
         this.y1 = y;
         this.z1 = 2;
@@ -121,14 +126,16 @@ window.onload = function(){
         this.age = 0;
         this.width = 4;
     }
-    
-    Particle.prototype.update = function(){
-        this.age++;
-        if(this.age > 45)this.removed = true;
+
+    Particle.prototype.update = function () {
+        this.age += 1;
+        if (this.age > 45) {
+            this.removed = true;
+        }
         this.x1 += this.x2;
         this.y1 += this.y2;
         this.z1 += this.z2;
-        if(this.z1 < 0){
+        if (this.z1 < 0) {
             this.z1 = 0;
             this.z2 *= -0.5;
             this.x2 *= 0.6;
@@ -138,114 +145,124 @@ window.onload = function(){
         this.x = this.x1;
         this.y = this.y1;
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x - this.width/2,this.y - this.width/2 - this.z1,this.width,this.width);
-    }
-    
-    function Tower(ox,oy){
+        ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2 - this.z1, this.width, this.width);
+    };
+
+    function Tower(ox, oy) {
         this.cooldown = 60;
         this.crntcool = 0;
         this.x = ox;
         this.y = oy;
         this.width = 10;
         this.stats = {
-            kills:0,
-            exp:0
+            kills: 0,
+            exp: 0
         };
         this.selected = false;
         this.range = 40;
         this.extraRange = 0;
         this.levelRange = 0;
     }
-    
-    Tower.prototype.update = function(){
-        if(this.crntcool > 0)this.crntcool --;
-        if(this.crntcool == 0){
-            var dir = 0;
-                for(var i = 0; i < entitys.length; i++){
-                    if(this.crntcool > 0)break;
-                    var target = entitys[i];
-                    if(!(target instanceof Enemy))continue;
-                    else{
-                        if(Math.random() * 4 < 1){
-                            var x = this.x - target.x;
-                            var y = this.y - target.y;
-                            if(checkDist(this,target) <= this.range + this.extraRange){
-                                dir = Math.atan2(y,x);
-                                this.crntcool = this.cooldown;
-                                if(dir != 0)entitys.push(new Projectile(this.x,this.y,dir,this));
+
+    Tower.prototype.update = function () {
+        if (this.crntcool > 0) {
+            this.crntcool -= 1;
+        }
+        if (this.crntcool === 0) {
+            var dir = 0,
+                i,
+                target;
+            for (i = 0; i < entitys.length; i += 1) {
+                if (this.crntcool > 0) {
+                    break;
+                }
+                target = entitys[i];
+                if (target instanceof Enemy) {
+                    if (Math.random() * 4 < 1) {
+                        var x = this.x - target.x;
+                        var y = this.y - target.y;
+                        if (checkDist(this, target) <= this.range + this.extraRange) {
+                            dir = Math.atan2(y, x);
+                            this.crntcool = this.cooldown;
+                            if (dir !== 0) {
+                                entitys.push(new Projectile(this.x, this.y, dir, this));
                             }
                         }
                     }
                 }
+            }
         }
-        if(this.selected){
-            if(this.extraRange != 0){
+        if (this.selected) {
+            if (this.extraRange !== 0) {
                 ctx.fillStyle = "rgba(0, 255, 102,0.2)";
                 ctx.beginPath();
-                ctx.arc(this.x,this.y, this.range + this.extraRange,0,Math.PI * 2);
+                ctx.arc(this.x, this.y, this.range + this.extraRange, 0, Math.PI * 2);
                 ctx.fill();
             }
             ctx.fillStyle = "rgba(0,200,255,0.4)";
             ctx.beginPath();
-            ctx.arc(this.x,this.y,this.range,0,Math.PI * 2);
+            ctx.arc(this.x, this.y, this.range, 0, Math.PI * 2);
             ctx.fill();
         }
-        if(this.leveled){
-            for(var i = 0; i < 2; i++)
-                entitys.push(new Particle(this.x,this.y));
+        if (this.leveled) {
+            var b;
+            for (b = 0; b < 2; b += 1) {
+                entitys.push(new Particle(this.x, this.y));
+            }
             this.leveled = false;
         }
-        ctx.fillStyle="#777";
-        ctx.fillRect(this.x - this.width/2, this.y - this.width/2,this.width,this.width);
+        ctx.fillStyle = "#777";
+        ctx.fillRect(this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
     }
-    
-    Tower.prototype.levelUp = function(){
+
+    Tower.prototype.levelUp = function () {
         this.stats.exp = 0;
-        if(this.extraRange < 30)
+        if (this.extraRange < 30)
             this.extraRange += 5;
-        if(this.cooldown > 40)
+        if (this.cooldown > 40)
             this.cooldown -= 5;
         this.leveled = true;
     }
-    
-    function spawnEnemys(amt){
-        if(amt == null)amt = 10;
-        for(var i = 0; i < amt; i++)
+
+    function spawnEnemys(amt) {
+        if (amt == null) amt = 10;
+        for (var i = 0; i < amt; i++)
             entitys.push(new Enemy(-10 - (i * 15)));
     }
-    
-    function checkEnemyAmt(){
-        var amt =0;
-        for(var  i = 0; i < entitys.length; i++){
-            if(entitys[i] instanceof Enemy)amt++;
+
+    function checkEnemyAmt() {
+        var amt = 0;
+        for (var i = 0; i < entitys.length; i++) {
+            if (entitys[i] instanceof Enemy) amt++;
         }
         return amt;
     }
-    
+
     function update() {
-        ctx.clearRect(0,0,width,height);
-        for(var i = 0; i < entitys.length; i++){
+        ctx.clearRect(0, 0, width, height);
+        for (var i = 0; i < entitys.length; i++) {
             var c = entitys[i];
             c.update();
-            if((c instanceof Projectile || c instanceof Enemy || c instanceof Particle))if(c.removed)entitys.splice(i,1);
+            if ((c instanceof Projectile || c instanceof Enemy || c instanceof Particle))
+                if (c.removed) entitys.splice(i, 1);
         }
-        if(checkEnemyAmt() == 0)spawnEnemys(16);
+        if (checkEnemyAmt() == 0) spawnEnemys(16);
         requestAnimationFrame(update);
     }
-    
+
     canvas.onmousedown = function (event) {
         event.preventDefault();
         var x = event.layerX,
             y = event.layerY;
-        for(var i = 0; i < entitys.length; i++){
+        for (var i = 0; i < entitys.length; i++) {
             var c = entitys[i];
-            if((c instanceof Tower)){
+            if ((c instanceof Tower)) {
                 var dx = c.x - x,
                     dy = c.y - y,
                     dist = Math.sqrt(dx * dx + dy * dy);
-                if(dist <= c.width){
-                    for(var i = 0; i < entitys.length; i++){
-                        if(entitys[i] instanceof Tower)entitys[i].selected = false;
+                if (dist <= c.width) {
+                    for (var i = 0; i < entitys.length; i++) {
+                        if (entitys[i] instanceof Tower) entitys[i].selected = false;
                     }
                     setStats(c.stats);
                     c.selected = true;
@@ -253,26 +270,26 @@ window.onload = function(){
                 };
             }
         }
-        if(money >= 100 && event.detail == 2){
+        if (money >= 100 && event.detail == 2) {
             money -= 100;
-            entitys.push(new Tower(event.layerX,event.layerY));
+            entitys.push(new Tower(event.layerX, event.layerY));
         }
-        
-        if(event.detail == 1){
+
+        if (event.detail == 1) {
             setStats(null);
-            for(var i = 0; i < entitys.length; i++){
-                if(entitys[i] instanceof Tower){
+            for (var i = 0; i < entitys.length; i++) {
+                if (entitys[i] instanceof Tower) {
                     entitys[i].selected = false;
                 }
             }
         }
     }
-    
-    function init(){
+
+    function init() {
         console.log("init");
         spawnEnemys(16);
         update();
     }
-    
+
     init();
 }
