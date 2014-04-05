@@ -108,6 +108,39 @@ window.onload = function(){
         ctx.fillRect(this.x - this.width/2, this.y - this.width/2,this.width,this.width);
     }
     
+    function Particle(x,y){
+        this.x = x;
+        this.y = y;
+        this.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+        this.x1 = x;
+        this.y1 = y;
+        this.z1 = 2;
+        this.x2 = Math.random() * 0.3;
+        this.y2 = Math.random() * 0.2;
+        this.z2 = Math.random() * 0.7 + 2;
+        this.age = 0;
+        this.width = 4;
+    }
+    
+    Particle.prototype.update = function(){
+        this.age++;
+        if(this.age > 45)this.removed = true;
+        this.x1 += this.x2;
+        this.y1 += this.y2;
+        this.z1 += this.z2;
+        if(this.z1 < 0){
+            this.z1 = 0;
+            this.z2 *= -0.5;
+            this.x2 *= 0.6;
+            this.y2 *= 0.6;
+        }
+        this.z2 -= 0.15;
+        this.x = this.x1;
+        this.y = this.y1;
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x - this.width/2,this.y - this.width/2 - this.z1,this.width,this.width);
+    }
+    
     function Tower(ox,oy){
         this.cooldown = 60;
         this.crntcool = 0;
@@ -120,6 +153,8 @@ window.onload = function(){
         };
         this.selected = false;
         this.range = 40;
+        this.extraRange = 0;
+        this.levelRange = 0;
     }
     
     Tower.prototype.update = function(){
@@ -134,7 +169,7 @@ window.onload = function(){
                         if(Math.random() * 4 < 1){
                             var x = this.x - target.x;
                             var y = this.y - target.y;
-                            if(checkDist(this,target) <= this.range){
+                            if(checkDist(this,target) <= this.range + this.extraRange){
                                 dir = Math.atan2(y,x);
                                 this.crntcool = this.cooldown;
                                 if(dir != 0)entitys.push(new Projectile(this.x,this.y,dir,this));
@@ -144,10 +179,21 @@ window.onload = function(){
                 }
         }
         if(this.selected){
+            if(this.extraRange != 0){
+                ctx.fillStyle = "rgba(0, 255, 102,0.2)";
+                ctx.beginPath();
+                ctx.arc(this.x,this.y, this.range + this.extraRange,0,Math.PI * 2);
+                ctx.fill();
+            }
             ctx.fillStyle = "rgba(0,200,255,0.4)";
             ctx.beginPath();
             ctx.arc(this.x,this.y,this.range,0,Math.PI * 2);
             ctx.fill();
+        }
+        if(this.leveled){
+            for(var i = 0; i < 2; i++)
+                entitys.push(new Particle(this.x,this.y));
+            this.leveled = false;
         }
         ctx.fillStyle="#777";
         ctx.fillRect(this.x - this.width/2, this.y - this.width/2,this.width,this.width);
@@ -155,9 +201,11 @@ window.onload = function(){
     
     Tower.prototype.levelUp = function(){
         this.stats.exp = 0;
-        this.range += 5;
+        if(this.extraRange < 30)
+            this.extraRange += 5;
         if(this.cooldown > 40)
             this.cooldown -= 5;
+        this.leveled = true;
     }
     
     function spawnEnemys(amt){
@@ -179,7 +227,7 @@ window.onload = function(){
         for(var i = 0; i < entitys.length; i++){
             var c = entitys[i];
             c.update();
-            if((c instanceof Projectile || c instanceof Enemy))if(c.removed)entitys.splice(i,1);
+            if((c instanceof Projectile || c instanceof Enemy || c instanceof Particle))if(c.removed)entitys.splice(i,1);
         }
         if(checkEnemyAmt() == 0)spawnEnemys(16);
         requestAnimationFrame(update);
