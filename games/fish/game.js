@@ -296,7 +296,7 @@ window.onload = function () {
             entitys.push(new Wave());
             entitys.push(new Rod());
             var i;
-            for (i = 0; i < 8; i += 1) {
+            for (i = 0; i < 1; i += 1) {
                 entitys.push(new Fish(Math.floor(Math.random() * width), 150 + Math.floor(Math.random() * 100)));
             }
         } else {
@@ -365,8 +365,9 @@ window.onload = function () {
     function init() {
         changeGamemode(0);
         entitys.push(new Button(70, 20, "Play"));
-        entitys.push(new Button(100, 20, "Help"));
+      //  entitys.push(new Button(100, 20, "Help"));
         getWaves().waves[50].speed = 100;
     }
     init();
+    ga("send","event","Fish","load","Called after init");
 };
