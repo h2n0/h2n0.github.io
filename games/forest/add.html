@@ -1,0 +1,66 @@
+<body>
+    <div>Time:
+        <input id="time" type="text" />
+        <input id="ts" value="add" type="submit" />
+    </div>
+    <div>Sits:
+        <input id="sit" type="text" />
+        <input id="ss" value="add" type="submit" />
+    </div>
+    <script>
+        function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6
+            {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET", filename, false);
+            xhttp.send();
+            return xhttp.responseXML;
+        }
+
+        var t = document.getElementById("time"),
+            ts = document.getElementById("ts"),
+            s = document.getElementById("sit"),
+            ss = document.getElementById("ss"),
+            xml = loadXMLDoc("stats.xml");
+
+        function save() {
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6
+            {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET", "save.php?q="+xml, true);
+            xhttp.send();
+        }
+
+        ts.onclick = function() {
+            if (t.value != undefined && t.vaule != 0 && t.value != "") {
+                var newx = xml.createElement("push");
+                var newam = xml.createElement("time");
+                newam.innerHTML = t.value;
+                var x = xml.getElementsByTagName("stats")[0];
+                newx.appendChild(newam);
+                x.appendChild(newx);
+                t.value = "";
+                save();
+            }
+        };
+
+        ss.onclick = function() {
+            if (s.value != undefined && s.vaule != 0 && s.value != "") {
+                var newx = xml.createElement("sit");
+                var newam = xml.createElement("amt");
+                newam.innerHTML = s.value;
+                var x = xml.getElementsByTagName("stats")[0];
+                newx.appendChild(newam);
+                x.appendChild(newx);
+                s.value = "";
+                save();
+            }
+        };
+    </script>
+</body>

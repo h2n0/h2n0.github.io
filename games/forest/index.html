@@ -1,0 +1,55 @@
+<body marginwidth="0" marginheight="0">
+    <canvas>No canvas for you</canvas>
+    <script>
+        function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6
+            {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET", filename, false);
+            xhttp.send();
+            return xhttp.responseXML;
+        }
+        var a = document.getElementsByTagName('canvas')[0];
+        var b = document.body;
+        var d = function(e) {
+            return function() {
+                e.parentNode.removeChild(e);
+            };
+        }(a);
+         // unprefix some popular vendor prefixed things (but stick to their original name)
+        var AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+        var requestAnimationFrame =
+            window.requestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+                function(f) {
+                    setTimeout(f, 1000 / 30);
+            };
+         // fix bug in safari: http://qfox.nl/weblog/218
+        document.body.clientWidth;
+         // auto resize (original) canvas. call `onresize(w,h) to limit the size of the canvas
+        (window.onorientationchange = window.onresize = function(a) {
+            var mw = Infinity;
+            var mh = Infinity;
+            var min = Math.min;
+
+            return function(w, h) {
+                if (arguments.length === 2) {
+                    mw = w;
+                    mh = h;
+                }
+                a.style.width = (a.width = min(mw, innerWidth)) + 'px';
+                a.style.height = (a.height = min(mh, innerHeight)) + 'px';
+            };
+        }(a))();
+
+        var c = a.getContext('2d');
+    </script>
+    <script type="text/javascript" src="code.js"></script>
+</body>

@@ -9,8 +9,8 @@ window.onload = function () {
         title: 0,
         game: 1,
         about: 2
-    },
-        canvas = document.getElementById("can"),
+    }
+    var canvas = document.getElementById("can"),
         ctx = canvas.getContext("2d"),
         width = 500,
         height = 200,
@@ -22,13 +22,13 @@ window.onload = function () {
     canvas.height = height;
 
     function Wave() {
-        this.tension = 0.025;
-        this.damp = 0.025;
-        this.spread = 0.25;
+        this.tension = .025;
+        this.damp = .025;
+        this.spread = .25;
         this.waves = [];
         this.numwaves = 100;
         var i, x, y;
-        for (i = 0; i < this.numwaves; i += 1) {
+        for (i = 0; i < this.numwaves; i = 1) {
             x = Math.ceil(width / this.numwaves) * i;
             y = height - (height / 3) * 1.5;
             this.waves.push({
@@ -46,15 +46,16 @@ window.onload = function () {
     }
 
     Wave.prototype.update = function () {
-        var i, grad, diff, lDeltas = [],
-            rDeltas = [],
-            last;
+        var i, grad;
         for (i = 0; i < this.numwaves; i += 1) {
-            diff = this.waves[i].targetHeight - this.waves[i].height;
+            var diff = this.waves[i].targetHeight - this.waves[i].height;
             this.waves[i].speed += this.tension * diff - this.waves[i].speed * this.damp;
             this.waves[i].height += this.waves[i].speed;
         }
-        for (i = 0; i < this.numwaves; i += 1) {
+
+        var lDeltas = [],
+            rDeltas = [];
+        for (var i = 0; i < this.numwaves; i++) {
             if (i > 0) {
                 lDeltas[i] = this.spread * (this.waves[i].height - this.waves[i - 1].height);
                 this.waves[i - 1].speed += lDeltas[i];
@@ -65,7 +66,7 @@ window.onload = function () {
                 this.waves[i + 1].speed += rDeltas[i];
             }
         }
-        last = this.waves.length - 1;
+        var last = this.waves.length - 1;
         ctx.beginPath();
         for (i = 0; i < this.numwaves; i += 1) {
             if (i > 0) {
@@ -143,16 +144,12 @@ window.onload = function () {
         if (this.y + this.size > height) {
             this.y -= 1;
         }
-        if (this.y > height / 2 - 10) {
-            this.inwater = false;
-        } else {
-            this.inwater = true;
-        }
-        if (!this.inwater) {
+        if (this.y > height / 2 - 10) this.inwater = false;
+        else this.inwater = true;
+        if (!this.inwater)
             if (this.y > this.targetY) {
                 this.y -= this.speed * this.mass;
             }
-        }
         if (this.y < this.targetY) {
             this.y += this.speed * this.mass;
         }
@@ -165,8 +162,7 @@ window.onload = function () {
         this.length = 10;
         this.points = [];
         this.fish = null;
-        var i;
-        for (i = 0; i < this.length; i += 1) {
+        for (var i = 0; i < this.length; i++) {
             this.points.push({
                 pos: {
                     x: 20 * i,
@@ -185,31 +181,31 @@ window.onload = function () {
     }
 
     Rod.prototype.update = function () {
-        var i, c, n, difX, difY, d, diff, tx, ty, transX, transY, lp, hx, hy, cs, vSpeed, waves, wave;
-        for (i = 0; i < this.points.length; i += 1) {
-            if (i === 0) {
-                c = this.points[i];
-                n = this.points[i + 1];
-                difX = c.pos.x - mx;
-                difY = c.pos.y - my;
-                d = Math.sqrt(difX * difX + difY * difY);
-                diff = (this.lineLength - d) / d;
-                tx = difX * 0.5 * diff;
-                ty = difY * 0.5 * diff;
+        for (var i = 0; i < this.points.length; i++) {
+            if (i == 0) {
+                var c = this.points[i];
+                var n = this.points[i + 1];
+                var difX = c.pos.x - mx;
+                var difY = c.pos.y - my;
+                var d = Math.sqrt(difX * difX + difY * difY);
+                var diff = (this.lineLength - d) / d;
+                var tx = difX * 0.5 * diff;
+                var ty = difY * 0.5 * diff;
+
                 c.pos.x += tx;
                 c.pos.y += ty;
                 n.pos.x += tx;
                 n.pos.y += ty;
             }
             if (i < this.points.length - 1) {
-                c = this.points[i];
-                n = this.points[i + 1];
-                difX = c.pos.x - n.pos.x;
-                difY = c.pos.y - n.pos.y;
-                d = Math.sqrt(difX * difX + difY * difY);
-                diff = (this.lineLength - d) / d;
-                transX = difX * 0.5 * diff;
-                transY = difY * 0.5 * diff;
+                var c = this.points[i];
+                var n = this.points[i + 1];
+                var difX = c.pos.x - n.pos.x;
+                var difY = c.pos.y - n.pos.y;
+                var d = Math.sqrt(difX * difX + difY * difY);
+                var dif = (this.lineLength - d) / d;
+                var transX = difX * 0.5 * dif;
+                var transY = difY * 0.5 * dif;
                 if (c.pos.x < 0) {
                     c.pos.x = 0;
                     if (c.vx < 0) {
@@ -237,49 +233,45 @@ window.onload = function () {
 
             }
         }
-        for (i = 0; i < entitys.length; i += 1) {
-            if (!this.canHook) {
-                break;
-            }
-            c = entitys[i];
+        for (var i = 0; i < entitys.length; i++) {
+            if (!this.canHook) break;
+            var c = entitys[i];
             if (c instanceof Fish) {
-                lp = this.points[this.points.length - 1];
-                hx = lp.pos.x;
-                hy = lp.pos.y;
-                if (hx >= c.x && hx <= c.x + c.size && hy >= c.y && hy <= c.y + c.size) {
+                var lp = this.points[this.points.length - 1];
+                var hx = lp.pos.x;
+                var hy = lp.pos.y;
+                var fx = c.x;
+                var fy = c.y;
+                if (hx >= fx && hx <= fx + c.size && hy >= fy && fy <= fy + c.size) {
                     c.hooked = true;
                     this.canHook = false;
                     this.fish = c;
                 }
             }
         }
-        if (this.fish !== null) {
-            lp = this.points[this.points.length - 1];
-            cs = this.fish.y;
+        if (this.fish != null) {
+            var lp = this.points[this.points.length - 1];
+            var cs = this.fish.y;
             this.fish.x = lp.pos.x;
             this.fish.y = lp.pos.y;
-            vSpeed = cs - this.fish.y;
-            waves = getWaves();
-            wave = Math.floor(this.fish.x / (width / waves.numwaves));
-            if (this.fish.y !== this.fish.oy && this.fish.y >= waves.waves[wave].pos.y) {
+            var vSpeed = cs - this.fish.y;
+            var waves = getWaves();
+            var wave = Math.floor(this.fish.x / (width / waves.numwaves));
+            if (this.fish.y != this.fish.oy && this.fish.y >= waves.waves[wave].pos.y)
                 waves.waves[wave].speed = vSpeed;
-            }
         }
         ctx.strokeStyle = "#000";
         ctx.beginPath();
         ctx.moveTo(this.points[0].pos.x, this.points[0].pos.y);
-        for (i = 0; i < this.points.length; i += 1) {
+        for (var i = 0; i < this.points.length; i += 1) {
             ctx.lineTo(this.points[i].pos.x, this.points[i].pos.y);
         }
         ctx.stroke();
-    };
+    }
 
     function getRod() {
-        var i;
-        for (i = 0; i < entitys.length; i += 1) {
-            if (entitys[i] instanceof Rod) {
-                return entitys[i];
-            }
+        for (var i = 0; i < entitys.length; i++) {
+            if (entitys[i] instanceof Rod) return entitys[i]
         }
     }
 
@@ -295,20 +287,49 @@ window.onload = function () {
 
 
     function changeGamemode(newGamemode) {
-        if (newGamemode === 0) {
+        if (newGamemode == 0) {
             entitys.push(new Wave());
             entitys.push(new Rod());
             update();
-        } else if (newGamemode === 1) {
+        } else if (newGamemode == 1) {
             entitys = [];
             entitys.push(new Wave());
             entitys.push(new Rod());
             var i;
-            for (i = 0; i < 1; i += 1) {
+            for (i = 0; i < 8; i += 1) {
                 entitys.push(new Fish(Math.floor(Math.random() * width), 150 + Math.floor(Math.random() * 100)));
             }
+        } else {
+
         }
         gamemode = newGamemode;
+    }
+
+    canvas.onmousemove = function (event) {
+        mx = event.layerX;
+        my = event.layerY;
+    }
+
+    canvas.onmousedown = function (event) {
+        if (gamemode == GameModes.title) {
+            var x = event.layerX;
+            var y = event.layerY;
+            for (var i = 0; i < entitys.length; i++) {
+                var c = entitys[i];
+                if (c instanceof Button) {
+                    if (x >= c.rect.x && y >= c.rect.y && x < c.rect.x + c.rect.w && y < c.rect.y + c.rect.h) {
+                        c.click();
+                    }
+                }
+            }
+        } else if (gamemode == GameModes.game) {
+            var c = getRod();
+            if (!c.canHook) {
+                c.fish.hooked = false;
+                c.canHook = true;
+                c.fish = null;
+            }
+        }
     }
 
     function Button(y, h, text) {
@@ -320,66 +341,32 @@ window.onload = function () {
     }
 
     Button.prototype.update = function () {
-
         ctx.strokeStyle = "#000";
         ctx.fillStyle = "#000";
-        var x = width / 2 - ctx.measureText(this.text).width / 2,
-            y = this.y - 13;
-        if (this.width === 0) {
-            this.width = ctx.measureText(this.text).width + 3 * 30;
-        }
+        var x = width / 2 - ctx.measureText("" + this.text).width / 2;
+        var y = this.y - 13;
+        if (this.width == 0) this.width = ctx.measureText("" + this.text).width + 3 * 30;
         ctx.strokeRect(x - 100, y, this.width * 2, this.h);
-        ctx.fillText(this.text, x, this.y);
-        if (this.rect === null) {
+        ctx.fillText("" + this.text, x, this.y);
+        if (this.rect == null) {
             this.rect = {
                 x: x - 100,
                 y: y,
                 w: this.width * 2,
-                h: this.h
-            };
+                h: this.y
+            }
         }
-    };
+    }
 
     Button.prototype.click = function () {
-        if (this.text === "Play") {
-            changeGamemode(1);
-        }
-    };
-
-    canvas.onmousemove = function (event) {
-        mx = event.layerX;
-        my = event.layerY;
-    };
-
-    canvas.onmousedown = function (event) {
-        var i, x, y, c;
-        if (gamemode === GameModes.title) {
-            x = event.layerX;
-            y = event.layerY;
-            for (i = 0; i < entitys.length; i += 1) {
-                c = entitys[i];
-                if (c instanceof Button) {
-                    if (x >= c.rect.x && y >= c.rect.y && x < c.rect.x + c.rect.w && y < c.rect.y + c.rect.h) {
-                        c.click();
-                    }
-                }
-            }
-        } else if (gamemode === GameModes.game) {
-            c = getRod();
-            if (!c.canHook) {
-                c.fish.hooked = false;
-                c.canHook = true;
-                c.fish = null;
-            }
-        }
-    };
+        if (this.text == "Play") changeGamemode(1);
+    }
 
     function init() {
         changeGamemode(0);
         entitys.push(new Button(70, 20, "Play"));
-        //  entitys.push(new Button(100, 20, "Help"));
+        entitys.push(new Button(100, 20, "Help"));
         getWaves().waves[50].speed = 100;
     }
     init();
-    ga("send", "event", "Fish", "load", "Called after init");
 };

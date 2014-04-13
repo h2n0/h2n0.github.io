@@ -1,6 +1,5 @@
 
 canvas#can{
-    margin-top: 40px;
     border: 1px solid black;
 }
 
@@ -15,12 +14,6 @@ div#banner{
 }
 #stats {
     width:500px;
-}
-
-#container{
-    width:50%;
-    margin-left: auto;
-    margin-right: auto;
 }
 #containerText{
     width:50%;
