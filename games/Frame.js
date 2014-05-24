@@ -13,9 +13,7 @@ var $ = function (id) {
         fill = fill || false;
         var c = getContext();
         c.beginPath();
-        with(c){
-            callback();
-        }
+        callback();
         c.closePath();
         if (fill) c.fill();
         else c.stroke();
@@ -24,9 +22,7 @@ var $ = function (id) {
         fill = fill || false;
         var c = getContext();
         c.beginPath();
-        with(c){
-            callback();
-        }
+        callback();
         c.closePath();
         if (fill) c.fill();
         c.stroke();
