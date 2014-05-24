@@ -78,4 +78,8 @@ var $ = function (id) {
     
     ator = function(angle){
         return angle * (Math.PI / 180);   
-    }
+    },
+    requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    
+    
+    window.requestAnimationFrame = requestAnimationFrame;
