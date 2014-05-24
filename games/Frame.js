@@ -13,10 +13,23 @@ var $ = function (id) {
         fill = fill || false;
         var c = getContext();
         c.beginPath();
-        callback();
+        with(c){
+            callback();
+        }
         c.closePath();
         if (fill) c.fill();
         else c.stroke();
+    },
+    outlineShape = function (callback, fill) {
+        fill = fill || false;
+        var c = getContext();
+        c.beginPath();
+        with(c){
+            callback();
+        }
+        c.closePath();
+        if (fill) c.fill();
+        c.stroke();
     },
     getClickPos = function (e) {
         var parPos = getPos(e.currentTarget),
