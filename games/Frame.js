@@ -1,12 +1,14 @@
 var $ = function (id) {
     return document.getElementById(id);
 },
+canId = "",
     getCanvas = function (id) {
+        if (id !== undefined) canId = id;
         var can = $("can") || $("canvas") || $(id);
         return can;
     },
     getContext = function (id) {
-        if (id == null) return getCanvas().getContext("2d");
+        if (id === null) return getCanvas().getContext("2d");
         else return getCanvas(id).getContext("2d");
     },
     makeShape = function (callback, fill) {
@@ -61,9 +63,9 @@ var $ = function (id) {
         var G = parseInt(color.substring(3, 5), 16);
         var B = parseInt(color.substring(5, 7), 16);
 
-        R = parseInt(R * (100 + percent) / 100);
-        G = parseInt(G * (100 + percent) / 100);
-        B = parseInt(B * (100 + percent) / 100);
+        R = parseInt(R * (100 + percent) / 100, 10);
+        G = parseInt(G * (100 + percent) / 100, 10);
+        B = parseInt(B * (100 + percent) / 100, 10);
 
         R = (R < 255) ? R : 255;
         G = (G < 255) ? G : 255;
@@ -72,8 +74,7 @@ var $ = function (id) {
         var RR = ((R.toString(16).length == 1) ? "0" + R.toString(16) : R.toString(16));
         var GG = ((G.toString(16).length == 1) ? "0" + G.toString(16) : G.toString(16));
         var BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
-        if (hash)
-            return "#" + RR + GG + BB;
+        if (hash) return "#" + RR + GG + BB;
         else {
             var res = "" + RR + GG + BB;
             return res;
@@ -84,11 +85,68 @@ var $ = function (id) {
         var result = (((hex & 0x7E7E7E) >> 1) | (hex & 0x808080));
         return hex;
     },
-    
-    ator = function(angle){
-        return angle * (Math.PI / 180);   
+
+    ator = function (angle) {
+        return angle * (Math.PI / 180);
     },
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-    
-    
-    window.requestAnimationFrame = requestAnimationFrame;
+
+
+window.requestAnimationFrame = requestAnimationFrame;
+
+var left = false,
+    right = false,
+    up = false,
+    down = false;
+
+getCanvas(canId).onkeydown = function (e) {
+    e = e || window.event;
+    var c = e.keyCode;
+    switch (c) {
+        case 65:
+        case 37:
+            left = true;
+            break;
+
+        case 68:
+        case 39:
+            right = true;
+            break;
+
+        case 87:
+        case 38:
+            up = true;
+            break;
+
+        case 83:
+        case 40:
+            down = true;
+            break;
+    }
+};
+
+getCanvas(canId).onkeydown = function (e) {
+    e = e || window.event;
+    var c = e.keyCode;
+    switch (c) {
+        case 65:
+        case 37:
+            left = false;
+            break;
+
+        case 68:
+        case 39:
+            right = false;
+            break;
+
+        case 87:
+        case 38:
+            up = false;
+            break;
+
+        case 83:
+        case 40:
+            down = false;
+            break;
+    }
+};
