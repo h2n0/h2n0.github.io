@@ -96,8 +96,8 @@ var left = false,
     right = false,
     up = false,
     down = false;
-
-var keyDown = function (e) {
+    
+function keyDown (e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
@@ -123,7 +123,7 @@ var keyDown = function (e) {
     }
 };
 
-var keyUp = function (e) {
+ function keyUp(e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
