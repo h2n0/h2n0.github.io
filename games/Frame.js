@@ -97,7 +97,7 @@ var left = false,
     up = false,
     down = false;
 
-getCanvas().onkeydown = function (e) {
+var keyDown = function (e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
@@ -123,7 +123,7 @@ getCanvas().onkeydown = function (e) {
     }
 };
 
-getCanvas().onkeydown = function (e) {
+var keyUp = function (e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
