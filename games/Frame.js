@@ -1,9 +1,7 @@
 var $ = function (id) {
     return document.getElementById(id);
 },
-canId = "",
     getCanvas = function (id) {
-        if (id != null) canId = id;
         var can = $("can") || $("canvas") || $(id);
         return can;
     },
@@ -99,7 +97,7 @@ var left = false,
     up = false,
     down = false;
 
-getCanvas(canId).onkeydown = function (e) {
+getCanvas().onkeydown = function (e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
@@ -125,7 +123,7 @@ getCanvas(canId).onkeydown = function (e) {
     }
 };
 
-getCanvas(canId).onkeydown = function (e) {
+getCanvas().onkeydown = function (e) {
     e = e || window.event;
     var c = e.keyCode;
     switch (c) {
