@@ -3,7 +3,7 @@ var $ = function (id) {
 },
 canId = "",
     getCanvas = function (id) {
-        if (id !== undefined) canId = id;
+        if (id !== null) canId = id;
         var can = $("can") || $("canvas") || $(id);
         return can;
     },
