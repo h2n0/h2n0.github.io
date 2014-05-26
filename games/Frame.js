@@ -126,6 +126,7 @@ function keyDown (e) {
  function keyUp(e) {
     e = e || window.event;
     var c = e.keyCode;
+    console.log(c);
     switch (c) {
         case 65:
         case 37:
