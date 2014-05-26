@@ -164,3 +164,14 @@ function keyUp(e) {
             break;
     }
 };
+
+function fullElement(el){
+    var root = $(el);
+    if(root.requestFullScreen){
+        root.requestFullScreen();
+    }else if(root.mozRequestFullScreen){
+        root.mozRequestFullScreen();
+    }else if(root.webkitRequestFullScreen){
+        root.webkitRequestFullScreen()
+    }
+};
