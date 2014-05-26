@@ -165,13 +165,13 @@ function keyUp(e) {
     }
 };
 
-function fullElement(el){
-    var root = $(el);
-    if(root.requestFullScreen){
-        root.requestFullScreen();
-    }else if(root.mozRequestFullScreen){
-        root.mozRequestFullScreen();
-    }else if(root.webkitRequestFullScreen){
-        root.webkitRequestFullScreen()
-    }
-};
+function fullscreen(elt){
+           var el = $(elt);
+ 
+           if(el.webkitRequestFullScreen) {
+               el.webkitRequestFullScreen();
+           }
+          else {
+             el.mozRequestFullScreen();
+          }            
+}
