@@ -87,6 +87,14 @@ var $ = function (id) {
     ator = function (angle) {
         return angle * (Math.PI / 180);
     },
+    getScale = function(x,y){
+        x = x || 300;
+        y = y || 150;
+        var w = getCanvas().width/x,
+            h = getCanvas().height/y,
+            scale = (w+h)/2;
+        return scale;
+    }
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 
