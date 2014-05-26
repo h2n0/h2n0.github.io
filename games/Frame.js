@@ -165,13 +165,17 @@ function keyUp(e) {
     }
 };
 
-function fullscreen(elt){
-           var el = $(elt);
- 
-           if(el.webkitRequestFullScreen) {
-               el.webkitRequestFullScreen();
-           }
-          else {
-             el.mozRequestFullScreen();
-          }            
+function fullscreen(elt) {
+    if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+        var i = $(elt);
+        if (i.requestFullscreen) {
+            i.requestFullscreen();
+        } else if (i.webkitRequestFullscreen) {
+            i.webkitRequestFullscreen();
+        } else if (i.mozRequestFullScreen) {
+            i.mozRequestFullScreen();
+        } else if (i.msRequestFullscreen) {
+            i.msRequestFullscreen();
+        }
+    }
 }
