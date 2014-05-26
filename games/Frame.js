@@ -87,13 +87,13 @@ var $ = function (id) {
     ator = function (angle) {
         return angle * (Math.PI / 180);
     },
-    getScale = function(x,y){
+    getScale = function(can,x,y){
         x = x || 300;
         y = y || 150;
-        getCanvas().width = window.innerWidth;
-        getCanvas().height = window.innerHeight;
-        var w = getCanvas().width/x,
-            h = getCanvas().height/y,
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+        var w = can.width/x,
+            h = can.height/y,
             scale = (w+h)/2;
         return scale;
     }
