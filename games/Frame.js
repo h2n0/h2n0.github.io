@@ -175,6 +175,6 @@ function fullscreen(elt) {
             canvas.mozRequestFullScreen();
         } else if (canvas.msRequestFullscreen) {
             canvas.msRequestFullscreen();
-        }
-    }else{console.log("Not for you");}
+        }else console.log("Unable to go fullscreen");
+    }else console.log("Fullscreen not supported");
 };
