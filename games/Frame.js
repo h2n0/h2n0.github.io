@@ -1,8 +1,10 @@
 var $ = function (id) {
     return document.getElementById(id);
 },
+    canvas = null;
     getCanvas = function (id) {
         var can = $("can") || $("canvas") || $(id);
+        canvas = can;
         return can;
     },
     getContext = function (id) {
@@ -87,17 +89,17 @@ var $ = function (id) {
     ator = function (angle) {
         return angle * (Math.PI / 180);
     },
-    getScale = function(can,x,y){
+    getScale = function(x,y){
         x = x || 300;
         y = y || 150;
-        can.width = window.innerWidth;
-        can.height = window.innerHeight;
-        var w = can.width/x,
-            h = can.height/y,
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var w = canvas.width/x,
+            h = canvas.height/y,
             scale = (w+h)/2;
         console.log("New scale: "+scale);
         return scale;
-    }
+    },
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 
