@@ -95,6 +95,7 @@ var $ = function (id) {
         var w = can.width/x,
             h = can.height/y,
             scale = (w+h)/2;
+        console.log("New scale: "+scale);
         return scale;
     }
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
