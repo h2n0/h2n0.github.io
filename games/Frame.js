@@ -86,6 +86,8 @@ darkenHex = function (hex) {
 },
 
 ator = function (angle) {
+    if(angle > 360)angle -= 360;
+    if(angle < 0)angle += 360;
     return angle * (Math.PI / 180);
 },
 getScale = function (x, y) {
