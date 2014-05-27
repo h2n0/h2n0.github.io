@@ -8,8 +8,7 @@ getCanvas = function (id) {
     return can;
 },
 getContext = function (id) {
-    if (id == null) return getCanvas().getContext("2d");
-    else return getCanvas(id).getContext("2d");
+    return canvas.getContext("2d");
 },
 makeShape = function (callback, fill) {
     fill = fill || false;
