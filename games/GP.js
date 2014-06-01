@@ -197,6 +197,6 @@ var gamepadSupport = {
 
   /** returns the controller that was requested **/
   getPad: function(id){
-  	return gamepadSupport.gamepads[gamepadId];
+  	return gamepadSupport.gamepads[id];
   }
 };
