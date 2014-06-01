@@ -27,7 +27,7 @@ var gamepadSupport = {
 
   /** Checks is Gamepads are supported **/
   gamepadsSupported:function(){
-  	var res = gamepadSupportAvailable = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
+  	var res = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
   	return res;
   },
 
@@ -35,7 +35,7 @@ var gamepadSupport = {
    * Initialize support for Gamepad API.
    */
   init: function() {
-    var gamepadSupportAvailable = gamepadsSupported();
+    var gamepadSupportAvailable = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
 
     if (!gamepadSupportAvailable) {
       // It doesn’t seem Gamepad API is available – show a message telling
