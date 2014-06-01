@@ -198,11 +198,5 @@ var gamepadSupport = {
   /** returns the controller that was requested **/
   getPad: function(id){
   	return gamepadSupport.gamepads[gamepadId];
-  },
-
-  /** Pre created controllers **/
-  pad1: this.getPad(0),
-  pad2: this.getPad(1),
-  pad3: this.getPad(2),
-  pad4: this.getPad(3)
+  }
 };
