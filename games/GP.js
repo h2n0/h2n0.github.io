@@ -201,8 +201,8 @@ var gamepadSupport = {
   },
 
   /** Pre created controllers **/
-  pad1: getPad(0),
-  pad2: getPad(1),
-  pad3: getPad(2),
-  pad4: getPad(3)
+  pad1: this.getPad(0),
+  pad2: this.getPad(1),
+  pad3: this.getPad(2),
+  pad4: this.getPad(3)
 };
