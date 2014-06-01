@@ -24,18 +24,23 @@ var gamepadSupport = {
   // as last time).
   prevTimestamps: [],
 
+
+  /** Checks is Gamepads are supported **/
+  gamepadsSupported:function()[{
+  	var res = gamepadSupportAvailable = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
+  	return res;
+    }
+
   /**
    * Initialize support for Gamepad API.
    */
   init: function() {
-    var gamepadSupportAvailable = navigator.getGamepads ||
-        !!navigator.webkitGetGamepads ||
-        !!navigator.webkitGamepads;
+    var gamepadSupportAvailable = gamepadsSupported();
 
     if (!gamepadSupportAvailable) {
       // It doesn’t seem Gamepad API is available – show a message telling
       // the visitor about it.
-      tester.showNotSupported();
+      alert("You browser does not support the Gamepad API so some features may function correctly")
     } else {
       // Check and see if gamepadconnected/gamepaddisconnected is supported.
       // If so, listen for those events and don't start polling until a gamepad
@@ -59,9 +64,6 @@ var gamepadSupport = {
     // Add the new gamepad on the list of gamepads to look after.
     gamepadSupport.gamepads.push(event.gamepad);
 
-    // Ask the tester to update the screen to show more gamepads.
-    tester.updateGamepads(gamepadSupport.gamepads);
-
     // Start the polling loop to monitor button changes.
     gamepadSupport.startPolling();
   },
@@ -83,8 +85,6 @@ var gamepadSupport = {
       gamepadSupport.stopPolling();
     }
 
-    // Ask the tester to update the screen to remove the gamepad.
-    tester.updateGamepads(gamepadSupport.gamepads);
   },
 
   /**
@@ -195,7 +195,15 @@ var gamepadSupport = {
     }
   },
 
+  /** returns the controller that was requested **/
   getPad: function(id){
   	return gamepadSupport.gamepads[gamepadId];
-  }
+  },
+
+  /** Pre created controllers **/
+  pad1: getPad(0),
+  pad2: getPad(1),
+  pad3: getPad(2),
+  pad4: getPad(3)
+  
 };
