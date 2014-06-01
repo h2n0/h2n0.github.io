@@ -29,7 +29,7 @@ var gamepadSupport = {
   gamepadsSupported:function(){
   	var res = gamepadSupportAvailable = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
   	return res;
-  }
+  },
 
   /**
    * Initialize support for Gamepad API.
