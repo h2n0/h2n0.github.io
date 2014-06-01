@@ -26,10 +26,10 @@ var gamepadSupport = {
 
 
   /** Checks is Gamepads are supported **/
-  gamepadsSupported:function()[{
+  gamepadsSupported:function(){
   	var res = gamepadSupportAvailable = navigator.getGamepads || !!navigator.webkitGetGamepads || !!navigator.webkitGamepads;
   	return res;
-    }
+  }
 
   /**
    * Initialize support for Gamepad API.
@@ -205,5 +205,4 @@ var gamepadSupport = {
   pad2: getPad(1),
   pad3: getPad(2),
   pad4: getPad(3)
-  
 };
