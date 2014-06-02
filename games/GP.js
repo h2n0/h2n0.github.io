@@ -204,11 +204,12 @@ var gamepadSupport = {
   	return gamepadSupport.gamepads[id];
   },
 
-  getAngle: function(pad,stick){
+  getAngles: function(pad,stick){
   	var x = pad.axes[0 + stick * 2];
   	var y = pad.axes[1 + stick * 2];
-  	var res = Math.atan2(y,x);
-  	return res;
+  	var ax = Math.tan(x);
+  	var ay = Math.tan(y);
+  	return {x:ax,y:ay};
   },
 
   LeftStick: 0,
