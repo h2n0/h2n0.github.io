@@ -87,6 +87,10 @@ var gamepadSupport = {
 
   },
 
+  padConnected: function(){
+  	return gamepadSupport.gamepads.length;
+  },
+
   /**
    * Starts a polling loop to check for gamepad state.
    */
@@ -198,5 +202,15 @@ var gamepadSupport = {
   /** returns the controller that was requested **/
   getPad: function(id){
   	return gamepadSupport.gamepads[id];
-  }
+  },
+
+  getAngle: function(pad,stick){
+  	var x = pad.axes[0 + stick * 2];
+  	var y = pad.axes[1 + stick * 2];
+  	var res = Math.atan2(y,x);
+  	return res;
+  },
+
+  LeftStick: 0,
+  RightStick: 1
 };
