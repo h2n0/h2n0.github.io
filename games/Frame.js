@@ -1,8 +1,10 @@
 var $ = function (id) {
         return document.getElementById(id);
     },
+    canvas,
     getCanvas = function (id) {
         var can = $("can") || $("canvas") || $(id);
+        canvas = can
         return can;
     },
     getContext = function (id) {
