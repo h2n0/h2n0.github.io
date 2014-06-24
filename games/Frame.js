@@ -213,4 +213,5 @@ var left = false,
             var d = document.createElement("div");
             d.append(foot)
             parent.append(d);
+            return d;
     }
