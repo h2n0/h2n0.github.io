@@ -204,6 +204,10 @@ var left = false,
             var foot = document.createTextNode(""+text);
             var d = document.createElement("div");
             d.appendChild(foot)
+            d.style.position="fixed";
+            d.style.right="2px";
+            d.style.bottom="0px";
+            d.style.font-size="12px";
             parent.appendChild(d);
     },
     
@@ -212,6 +216,10 @@ var left = false,
             var foot = document.createTextNode(""+text);
             var d = document.createElement("div");
             d.appendChild(foot)
+            d.style.position="fixed";
+            d.style.right="2px";
+            d.style.bottom="0px";
+            d.style.font-size="12px";
             parent.appendChild(d);
             return d;
     }
