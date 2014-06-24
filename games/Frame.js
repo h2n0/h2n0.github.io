@@ -203,15 +203,15 @@ var left = false,
             var parent = canvas.parentNode;
             var foot = document.createTextNode(""+text);
             var d = document.createElement("div");
-            d.append(foot)
-            parent.append(d);
+            d.appendChild(foot)
+            parent.appendChild(d);
     },
     
     addFooter2 = function (text){
             var parent = canvas.parentNode;
             var foot = document.createTextNode(""+text);
             var d = document.createElement("div");
-            d.append(foot)
-            parent.append(d);
+            d.appendChild(foot)
+            parent.appendChild(d);
             return d;
     }
