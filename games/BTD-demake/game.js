@@ -15,7 +15,7 @@ window.onload = function () {
     canvas.width = width;
     canvas.height = height;
 
-    function setStats(tower) {
+    function setStats(tower) { // Fills the stats HTML with stats from the currently slected tower
         var k = document.getElementById("kills"),
             e = document.getElementById("exp"),
             kills,
@@ -31,13 +31,13 @@ window.onload = function () {
         }
     }
 
-    function checkDist(obj, obj2) {
+    function checkDist(obj, obj2) {// Checks the distance between (x1,y1) and (x2,y2)
         var x = obj2.x - obj.x,
             y = obj2.y - obj.y;
         return Math.sqrt(x * x + y * y);
     }
 
-    function Enemy(ox, oy, size) {
+    function Enemy(ox, oy, size) {// Enemy initalizer
         this.x = ox;
         this.y = oy;
         this.width = 10;
@@ -45,17 +45,17 @@ window.onload = function () {
         this.reset();
     }
 
-    Enemy.prototype.reset = function () {
-        this.speed = 0.75 * 3 * this.size / 2;
+    Enemy.prototype.reset = function () { //This is called when an enemy is created
+        this.speed = this.size;
         this.vx = this.speed;
         this.vy = 0;
-        this.colors = ["#000", "#F00", "#0cf"];
+        this.colors = ["#000", "#F00", "#0cf"];// Ballon color array
     };
 
-    Enemy.prototype.update = function () {
+    Enemy.prototype.update = function () { // Called from the update method to keep the ballon moving
         this.x += this.vx;
         this.y += this.vy;
-        if (this.isIn(485, 490, 5, 15)) {
+        if (this.isIn(485, 490, 5, 15)) {// All the point that tell the ballons what to do
             this.vy = this.speed;
             this.vx = 0;
         } else if (this.isIn(485, 490, 70, 80)) {
@@ -234,7 +234,7 @@ window.onload = function () {
             ctx.fill();
         }
         if (this.leveled) {
-            for (i = 0; i < 2; i += 1) {
+            for (i = 0; i < 10; i += 1) {
                 entitys.push(new Particle(this.x, this.y));
             }
             this.leveled = false;
@@ -291,6 +291,8 @@ window.onload = function () {
         if (checkEnemyAmt() === 0) {
             spawnEnemys(16, 2);
         }
+        ctx.fillStyle = "#000";
+        ctx.fillText("Cash:" + money, 10, 10);
         window.requestAnimationFrame(update);
     }
 
