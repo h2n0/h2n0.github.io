@@ -128,3 +128,19 @@ a#gameLink{
     height: 100%;
     background-color: #fff;
 }
+
+.center{
+    margin: auto;
+    text-align: center;
+}
+
+.slider {
+  height:40px;
+  padding:10px;
+  overflow:hidden;
+  transition:0.5s all;
+}
+.slider.hidden {
+  height:0px;
+  padding:0px 10px;
+}
