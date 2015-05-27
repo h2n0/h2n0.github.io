@@ -144,3 +144,8 @@ a#gameLink{
   height:0px;
   padding:0px 10px;
 }
+
+.swfContainer{
+    border-style: outset;
+    border-color: #CCC;
+}
