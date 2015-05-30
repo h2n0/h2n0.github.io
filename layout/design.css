@@ -149,3 +149,25 @@ a#gameLink{
     border-style: outset;
     border-color: #CCC;
 }
+#downloads {
+    padding: 20px;
+    margin: auto;
+    width: 75%;
+    background-color: #CCC;
+}
+
+.dl {
+    width: 100px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    background-color: #77C;
+    line-height: 100%;
+}
+
+
+
+.idl {
+    padding-right: 5px;
+}
+
+
