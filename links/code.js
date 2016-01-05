@@ -9,6 +9,7 @@ function $(id){
 $("tiny").onclick = function(){
 	var link = "http://tinyurl.com/" + genTinyLink();
   setLink(link);
+	prev.push(link);
 	currentPos = 0;
 }
 
@@ -21,12 +22,14 @@ $("prev").onclick = function(){
 $("goog").onclick = function(){
 	var link = genGooLink();
   setLink(link);
+	prev.push(link);
 	currentPos = 0;
 }
 
 $("bitl").onclick = function(){
 	var link = genBitLink();
   setLink(link);
+	prev.push(link);
 	currentPos = 0;
 }
 
@@ -82,5 +85,4 @@ function genBitLink(){
 function setLink(link){
 	document.getElementById("nonLink").innerHTML = link;
   document.getElementById("link").href = document.getElementById("nonLink").innerHTML;
-  prev.push(link);
 }
