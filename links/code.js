@@ -1,3 +1,6 @@
+var prev = [];
+var currentPos = 0;
+
 function $(id){
 	return document.getElementById(id);
 }
@@ -6,16 +9,25 @@ function $(id){
 $("tiny").onclick = function(){
 	var link = "http://tinyurl.com/" + genTinyLink();
   setLink(link);
+	currentPos = 0;
+}
+
+$("prev").onclick = function(){
+	setLink(prev[prev.length - 1 - currentPos]);
+	currentPos ++;
+	if(currentPos >= prev.length - 1)currentPos = prev.length - 1;
 }
 
 $("goog").onclick = function(){
 	var link = genGooLink();
   setLink(link);
+	currentPos = 0;
 }
 
 $("bitl").onclick = function(){
 	var link = genBitLink();
   setLink(link);
+	currentPos = 0;
 }
 
 function genTinyLink(){
@@ -70,4 +82,5 @@ function genBitLink(){
 function setLink(link){
 	document.getElementById("nonLink").innerHTML = link;
   document.getElementById("link").href = document.getElementById("nonLink").innerHTML;
+  prev.push(link);
 }
