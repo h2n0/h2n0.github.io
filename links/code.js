@@ -54,7 +54,7 @@ function genGooLink(){
 function genBitLink(){
   var parts = "abcdefghijklmnopqrstuvwxyz123456789";
   var res = "";
-  var amt = 1+ Math.floor(Math.random() * 5);
+  var amt = 4 + Math.floor(Math.random() * 2);
   for(var i = 0; i < amt; i++){
     var pos = Math.floor(Math.random() * parts.length);
     var s = parts.substring(pos,pos+1);
