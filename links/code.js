@@ -16,7 +16,7 @@ $("tiny").onclick = function(){
 $("prev").onclick = function(){
 	setLink(prev[prev.length - 2 - currentPos]);
 	currentPos ++;
-	if(currentPos >= prev.length - 1)currentPos = prev.length - 1;
+	if(currentPos >= prev.length - 2)currentPos = prev.length - 2;
 }
 
 $("goog").onclick = function(){
