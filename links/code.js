@@ -14,7 +14,7 @@ $("tiny").onclick = function(){
 }
 
 $("prev").onclick = function(){
-	setLink(prev[prev.length - 1 - currentPos]);
+	setLink(prev[prev.length - 2 - currentPos]);
 	currentPos ++;
 	if(currentPos >= prev.length - 1)currentPos = prev.length - 1;
 }
