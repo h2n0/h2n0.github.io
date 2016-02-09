@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>GameBank</title>
+    <meta charset="utf-8"></meta>
+    <link type="text/css" rel="stylesheet" href="./style.css"></link>
+    <script src="./res/scripts/action.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <header class="nav">
+        <div>
+          <img src="./res/images/logo.png" style="vertical-align: middle;"></img><span class="logo"> Game-Bank</span>
+          <div style="float:right; position:relative">
+            <div>
+              Your Basket: <img id="cart" src="./res/images/cart.png" style="vertical-align: middle;"></img><div class="bubble hidden" id="basketCount"></div>
+            </div>
+            <div id="basketDet" class="expand hidden">
+              <div style="width:95%;height:100%;margin-left:5%;">
+                <p>Total Cost:</p>
+                <h3 id="cost">Test</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul>
+          <li class="selected"><a href="./index.html">Home</a></li>
+          <li><a href="./store.html">Stores</a></li>
+        </ul>
+      </header>
+
+      <div class="page">
+        <div id="mainAd" class="ad">
+          <canavs></canvas>
+        </div>
+
+        <div id="hot">
+          <div class="saleItem">
+            <div class="itemPic">
+              <img alt="Game image" width=124 height=124 src="./res/images/spiro.jpg"></img>
+            </div>
+            <div class="itemDetails">
+              <h1>Nick Cage</h1>
+              <div class="labelText">Buy for</div>
+              <div class="priceText">£39.00</div>
+              <div class="labelText">Sell for</div>
+              <div class="priceText">£78.00</div>
+              <div class="labelText">Buy Qbs </div>
+              <button class="basket" onclick="addToBasket(39.00)">Add to basket</button>
+            </div>
+          </div>
+          <div class="saleItem">
+            <div class="itemPic">
+              <img width=124 height=124 alt="Game image" src="./res/images/star_wars.jpg"></img>
+            </div>
+            <div class="itemDetails">
+              <h1>Bill Murray</h1>
+              <div class="labelText">Buy for</div>
+              <div class="priceText">£64.00</div>
+              <div class="labelText">Sell for</div>
+              <div class="priceText">£256.00</div>
+              <div class="labelText">Buy Qbs </div>
+              <button class="basket" onclick="addToBasket(64.00)">Add to basket</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Made by Buzzy Business 2016</p>
+    </div>
+  </body>
+
+</html>
