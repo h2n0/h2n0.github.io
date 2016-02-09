@@ -5,6 +5,8 @@ var priceTag = null;
 var price = 0;
 var inBasket = 0;
 
+var opened = false;
+
 function removeClass(dom,s){
   var res = ""
   parts = dom.className.split(" ");
@@ -49,6 +51,18 @@ function getPrice(dom, price){
   dom.innerHTML = newPrice;
 }
 
+function cartClick(){
+  if(inBasket > 0){
+    if(opened){
+      addClass("hidden")
+      opened = false;
+    }else{
+      opened = true;
+      removeClass("hidden")
+    }
+  }
+}
+
 
 
 window.onload = function(){
@@ -61,4 +75,5 @@ window.onload = function(){
   priceTag = $("cost");
   $("cart").addEventListener("mouseover",cartOver);
   $("cart").addEventListener("mouseout", cartLeave);
+  $("cart").addEventListener("click", cartClick);
 }

@@ -7,6 +7,26 @@
   top: 50%;
 }
 
+.center{
+  position: relative;
+  width:100%;
+  height: 400px;
+  background-color: #CCC;
+}
+
+.centerInner{
+  position: absolute;
+  width: 60%;
+  height: 100%;
+  top: 0px;
+  background-image: -moz-linear-gradient(left,rgba(0,0,0,1) 25%,rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left,rgba(0,0,0,1) 25%,rgba(0,0,0,0));
+  background-image: -webkit-linear-gradient(left,rgba(0,0,0,1) 25%,rgba(0,0,0,0));
+  background-image: linear-gradient(left,rgba(0,0,0,1) 25%,rgba(0,0,0,0));
+  color: #FFF;
+  padding-left: 20px;
+}
+
 .navigation{
   position: relative;
   vertical-align: middle;
@@ -84,6 +104,13 @@ a{
   float: left;
 }
 
+.qbt{
+  width: 70%;
+  background-image: url("./res/images/qbt.png");
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
 .priceText{
   padding-right: 5px;
   padding-bottom: 5px;
@@ -128,6 +155,7 @@ a{
   overflow: hidden;
   height: 200px;
   color: #FFF;
+  border-radius: 5px;
 }
 
 
@@ -141,4 +169,8 @@ a{
   position: absolute;
   right: 10px;
   bottom: 0px;
+}
+
+.itemName{
+  font-size: 24px;
 }
