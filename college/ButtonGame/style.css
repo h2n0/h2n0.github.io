@@ -1,0 +1,23 @@
+.center{
+	width: 70%;
+	margin: 0 auto;
+	text-align:center;
+}
+
+button{
+	background-color: #CCC;
+	width: 50%;
+	height: 300px;
+}
+
+button:disabled{
+	background-color: #777;
+}
+
+button#btn1{
+	float: left;
+}
+
+button#btn2{
+	float: right;
+}
