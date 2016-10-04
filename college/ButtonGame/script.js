@@ -30,8 +30,14 @@ function startScreen(){ // Starts the game
 	console.log(baseW + ":" + baseH)
 
 	// Assign event handlers
-	button1.onclick = btn1;
-	button2.onclick = btn2;
+	button1.onclick = function(e){
+		e.preventDefault();
+		btn1();
+	}
+	button2.onclick = function(e){
+		e.preventDefault();
+		btn2();
+	}
 
 	// Initialise the buttons
 	initButtonSize();
