@@ -13,9 +13,15 @@ function $(id){ // The same as the jQuery function '$'
 	return document.getElementById(id);
 }
 
-window.onload = function(){ // Event 
+window.onload = function(){ // Event
 	cont = $("container")
 	startScreen()
+
+	ajax.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status == 200){
+			onMessage(this.responseText);
+		}
+	}
 }
 
 
@@ -80,6 +86,8 @@ function gameOver(){
 
 	score = 0;
 	started = false;
+
+	send(ajax, "server.html?t=2");
 }
 
 // Called when the first button is pushed
@@ -124,6 +132,6 @@ function changeButtonSize(){
 
 }
 
-
-// Target:
-// To finish the button game
+function onMessage(msg){
+	alert(msg);
+}
